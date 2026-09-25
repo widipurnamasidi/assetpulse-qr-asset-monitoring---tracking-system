@@ -1,0 +1,6 @@
+{
+  "name": "AssetPulse - QR Asset Monitoring & Tracking System",
+  "description": "Enterprise Asset Monitoring & Tracking System with real-time QR code scanning, immutable append-only audit trail, Excel & PDF reporting, and secure 2FA authentication.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
