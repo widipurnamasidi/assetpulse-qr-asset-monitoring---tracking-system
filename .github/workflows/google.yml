@@ -62,6 +62,13 @@ jobs:
       - name: 'Checkout'
         uses: 'actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332' # actions/checkout@v4
 
+      - name: 'Validate Kubernetes manifests'
+        run: |-
+          if [ ! -f "kustomization.yaml" ] && [ ! -f "kustomization.yml" ]; then
+            echo "Missing kustomization.yaml/yml in repository root. Add Kubernetes manifests before running this workflow."
+            exit 1
+          fi
+
       # Configure Workload Identity Federation and generate an access token.
       #
       # See https://github.com/google-github-actions/auth for more options,
@@ -80,13 +87,6 @@ jobs:
           username: 'oauth2accesstoken'
           password: '${{ steps.auth.outputs.access_token }}'
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
-
-      - name: 'Validate Kubernetes manifests'
-        run: |-
-          if [ ! -f "kustomization.yaml" ] && [ ! -f "kustomization.yml" ]; then
-            echo "Missing kustomization.yaml/yml in repository root. Add Kubernetes manifests before running this workflow."
-            exit 1
-          fi
 
       # Get the GKE credentials so we can deploy to the cluster
       - name: 'Set up GKE credentials'
